@@ -20,15 +20,15 @@ class NutritionService:
     def _load_nutrition_db(self):
         """Load nutrition database from JSON file"""
         try:
-            db_path = os.path.join(
-                os.path.dirname(os.path.dirname(__file__)),
-                settings.NUTRITION_DB_PATH
-            )
+            # __file__ is app/services/nutrition_service.py
+            # go up 2 levels: services/ -> app/ -> backend/ (project root)
+            backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+            db_path = os.path.join(backend_dir, settings.NUTRITION_DB_PATH)
             
             if os.path.exists(db_path):
                 with open(db_path, 'r') as f:
                     self.nutrition_db = json.load(f)
-                logger.info(f"Loaded nutrition data for {len(self.nutrition_db)} foods")
+                logger.info(f"Loaded nutrition data for {len(self.nutrition_db)} foods from {db_path}")
             else:
                 logger.warning(f"Nutrition database not found at {db_path}")
                 self.nutrition_db = self._get_default_nutrition_db()

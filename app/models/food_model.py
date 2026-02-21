@@ -44,16 +44,16 @@ class FoodModel:
     def _load_class_names(self):
         """Load class names from JSON file"""
         try:
-            class_names_path = os.path.join(
-                os.path.dirname(os.path.dirname(__file__)),
-                settings.CLASS_NAMES_PATH
-            )
+            # __file__ is app/models/food_model.py
+            # go up 2 levels: models/ -> app/ -> backend/ (project root)
+            backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+            class_names_path = os.path.join(backend_dir, settings.CLASS_NAMES_PATH)
             
             if os.path.exists(class_names_path):
                 with open(class_names_path, 'r') as f:
                     data = json.load(f)
                     self.class_names = data.get("classes", [])
-                logger.info(f"Loaded {len(self.class_names)} class names")
+                logger.info(f"Loaded {len(self.class_names)} class names from {class_names_path}")
             else:
                 logger.warning(f"Class names file not found at {class_names_path}")
                 self.class_names = self._get_default_class_names()
