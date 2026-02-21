@@ -1,0 +1,9 @@
+Food Recognition Model
+==================================================
+Training Date: 2026-02-14 22:04:26
+Architecture: MobileNetV2
+Image Size: 224x224
+Classes: 101
+Epochs: 10
+Final Accuracy: 0.4390
+Final Val Accuracy: 0.5169
